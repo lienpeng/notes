@@ -17,4 +17,19 @@ sorted(students, key=operator.itemgetter(1,2))
 
 python3 sorted取消了cmp,可以使用functools.cmp_to_key转换
 
+operator.attrgetter使用在对象上，需要定义class
+class Student:
+    def __init__(self, name, grade, age):
+        self.name = name
+        self.grade = grade
+        self.age = age
+
+    def __repr__(self):
+        return repr((self.name, self.grade, self.age))
+
+
+if __name__ == '__main__':
+    students = [Student("lee2",11,12),Student("lee3",12,9),Student("lee2",5,15)]
+    print( sorted(students, key=operator.attrgetter("grade")))
+
 
