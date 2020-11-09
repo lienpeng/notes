@@ -31,5 +31,11 @@ class Student:
 if __name__ == '__main__':
     students = [Student("lee2",11,12),Student("lee3",12,9),Student("lee2",5,15)]
     print( sorted(students, key=operator.attrgetter("grade")))
+    print( sorted(students, key= lambda a:a.age))
+
+sorted(list,key)
+key = lambda a:b
+key是一个函数，将传入的a转化为b,然后对b进行比较
+lambda是匿名表达式，只是简化代码的编写，对于带循环或者 for in if形式的为了可读性不要使用lambda
 
 
