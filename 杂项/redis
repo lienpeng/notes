@@ -1,0 +1,6 @@
+set
+smembers
+sadd 
+srem key member1
+scard 查看set大小
+del 删除/清空set

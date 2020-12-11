@@ -1,0 +1,121 @@
+k8s集群由master和Node节点组成
+Master 集群控制节点
+    kube-controller-manager 资源对象的自动化控制中心
+    kube-scheduler 资源调度 将Pod调度到相应的机器上
+    etcd 保存集群的状态
+    Api Server
+API Server作为集群的核心，负责集群各功能模块之间的通信。集群内的功能模块通过Api Server将信息存入到etcd,其他模块通过Api Server读取这些信息，从而实现模块之间的信息交互。
+Node节点上的Kubelet每隔一个时间周期，通过Api Server报告自身状态，Api Server接收到这些信息后，将节点信息保存到etcd中。
+Controller Manager中 的node controller通过Api server定期读取这些节点状态信息，并做响应处理。
+Scheduler监听到某个Pod创建的信息后，检索所有符合该pod要求的节点列表，并将pod绑定到节点列表中最符合要求的节点上。如果scheduler监听到某个Pod被删除，则调用api server删除该Pod资源对象。
+kubelet监听pod信息，如果监听到pod对象被删除，则删除本节点上的相应的pod实例，如果监听到修改Pod信息，则会相应地修改本节点的Pod实例。
+
+
+Node(Worker) 每个Node都会被Master分配一些工作负载（Docker容器）
+    kubelet 负责Master与Node之间的通信，Pod对应容器的创建、启停
+    kube-proxy 实现service的通信与均衡负载 每个node都用自己的一个IP地址。而kube-proxy就是负责每个node与其他node或Matser节点通信的枢纽。信息的流入和流出、请求的转发都是通过kube-proxy进行操作的。
+    docker docker引擎，负责本机容器的创建和管理
+    Container runtime负责镜像管理以及Pod和容器的真正运行（CRI）
+
+- Pod是最小单元，多个容器containers共享文件Volumes和网络IP地址，是一组容器和共享资源抽象出来的
+- RC和RS都是保证高可用，保证运行指定数量的POD副本 ReplicaSet 指定每个Pod的备份数量
+- Deployment是滚动升级
+- Service 各种信息的抽象 因为内部POD服务实例的起停，虚拟IP不断变化，客户端访问的就是Service，Service内部通过虚拟IP连接POD，Kube-proxy实现了负载均衡
+- Label 每个Pod的唯一标识符
+- JOB 批处理任务的API对象
+- Petset 每个POD挂载独立的存储，重新拉起的POD会挂载之前的存储
+- Node 所有POD所在的主机，可以是物理机也可以是虚拟机
+- Container 容器 Docker、mysql、tomcat
+
+kubectl 客户端工具，连接 apiserver 的配置(kubeconfig)，修改~/.kube/config文件
+
+
+## k8s Service 服务
+Pod只有内部IP,需要通过服务来对外暴露
+服务是通过标签选择器来确定使用哪些Pod的spec.selector字段确定哪些POD spec.type制定Service的类型：
+服务暴露的四种方式:
+ClusterIP (default) – 将服务暴露在集群内部的IP，此类型仅支持在集群内访问服务
+NodePort – 将服务暴露在所选定的每一个Node的同一个端口,集群外部服务可以通过<NodeIP>:<NodePort>方式访问服务
+LoadBalancer - 在 NodePort 的基础上，创建一个外部的负载均衡器，并将请求转发到 <NodeIP>:NodePort。此模式只能在云服务器（AWS等）上使用
+ExternalName 使用一个随意的名称（在规格中指定）来暴露服务，并会返回一个带有名称的CNAME记录。此类型不使用代理，这种类型只在kube-dns v1.7上才支持。
+kubectl describe services
+
+Deployment controller
+是kube-manager-controller的一种，
+
+kubectl scale deployments my-nexus3 --replicas=4
+kubectl get pods -o wide
+
+kubectl get svc得到的NodePort 80:30960 80是暴露的端口 30960是转发后外部可以访问的Node端口
+
+
+- RS 存在的问题：IP外部不可见，IP在销毁重建的过程中可能丢失。
+
+## ingress
+整个集群只需要一个load-balance
+
+
+## headless service 和普通service的区别
+headless不分配clusterIP
+headless service可以通过解析service的DNS域名,返回所有Pod的地址和DNS(statefulSet部署的Pod才有DNS)
+普通的service,只能通过解析service的DNS返回service的ClusterIP
+## statefulset和deployment的区别
+statefulSet下的Pod有DNS地址,通过解析Pod的DNS可以返回Pod的IP
+deployment下的Pod没有DNS
+
+## nslookup
+Service的ClusterIP工作原理:一个service可能对应一组endpoints(所有pod的地址+端口),client访问ClusterIP,通过iptables或者ipvs转发到Real Server(Pod)
+
+普通 service DNS查询时只会返回Service的ClusterIP地址
+headless servicedns查询会返回所有endpoint,也就是所有pod地址和DNS域名,通过解析pod的DNS域名也能返回Pod的IP
+
+## 使用headless的好处
+1.自主选择权，client可以决定使用哪个real server
+2.pod之间可以通过DNS域名互相访问
+
+
+## headless + statefulset好处
+1. headless会为POD分配一个域
+service name.namespace name.svc.cluster.local
+2. statefulset会为POD保持一个不变的POD name
+statefulset name-pod编号
+3. statefulset会为POD分配一个dnsName
+pod name.域name
+
+
+
+- create命令：根据文件或者输入来创建资源
+create -f 文件名
+
+- delete命令：删除资源
+根据yaml文件删除对应的资源，但是yaml文件并不会被删除，这样更加高效
+kubectl delete -f javak8s-deployment.yaml 
+根据资源名删除
+kubectl delete 具体的资源名称
+
+- get命令：获得资源信息
+
+- 集群故障排查和调试命令：describe，logs，exec，attach，port-foward，proxy，cp，auth
+
+- 查看my-nginx pod的详细状态
+kubectl describe pod my-nginx
+
+- 查看secret
+kubectl get secret
+
+
+- kubectl get namespaces查看nameserver
+
+- 创建namespace 
+kubectl create namespace jmqtest
+
+- kubectl explain pod 详细描述某个配置文件的参数意义
+- 查看日志
+kubectl logs --tail 200 -f podname -n jenkins
+
+- 删除所有pod
+kubectl get -n jmq5 pod -o name|grep joyqueue-broker|xargs kubectl -n jmq5 delete
+- 进入容器
+kubectl exec -it pod_name -n jmqtest -- /bin/bash
+
+

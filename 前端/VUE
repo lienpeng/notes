@@ -1,0 +1,46 @@
+node.js是javascript的一种运行环境，是对Google V8引擎进行的封装。是一个服务器端的javascript的解释器。
+node.js和npm是包含关系，nodejs中含有npm
+
+
+在一个文件或模块中，export、import可以有多个，export default仅有一个。 
+export 导出模块 可以在其他地方import引用 
+export可以导出多个命名模块，export defalt只能导出一个默认模块，可以匿名
+
+//demo.js
+export const str = "hello world"
+export function f(a){
+	return a+1;
+}
+引入方式：
+//demo2.js
+import { str ,f }from 'demo.js'
+
+//demo1.js
+export default {
+	a:'hello',
+	b:'world'
+}
+引入方式：
+import obj from ‘demo1.js’
+obj可以任意命名,并且没有花括号
+
+
+
+formatter 用于表格初始化格式化内容，当需要填充的字段与服务器返回字段有一个对应关系时使用。
+v-bind 绑定属性可以简写 v-bind:type="buttonType"简写:type="buttonType"
+响应式：
+只有初始化时候会添加setter getter
+修改数组元素
+修改数组长度
+
+v-model双向数据绑定
+v-bind单向绑定 响应式
+v-html动态渲染
+方法 new Vue({methods:{methodName(){}}})
+this指向该方法所属的组件
+计算属性 computed 对比方法 数值会被缓存
+方法不可写 计算属性不能接受参数
+监听器watch:{name(val,oldval):{}}
+过滤器 filter
+refer=‘name’ this.$ref.name只包含当前组件内部元素
+输入和事件 v-on可以简写@

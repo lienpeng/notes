@@ -1,4 +1,4 @@
-xlsxwriter比OpenPyXL功能更加强大，但是只能写，不能读已经写入的表格，不支持早起的XLS文件
+xlsxwriter比OpenPyXL功能更加强大，但是只能写，不能读已经写入的表格，不支持早期的XLS文件
 workbook = xlsxwriter.Workbook(name + '.xlsx')
 worksheet = workbook.add_worksheet()
 cell_format_head = workbook.add_format({

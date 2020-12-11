@@ -1,0 +1,21 @@
+[参考](http://www.ruanyifeng.com/blog/2019/09/curl-reference.html)
+1. 不带参数get
+curl http://www.baidu.com
+2. -A 客户端的用户代理头，即User-Agent
+3. -b Cookie
+4. -c Cookie文件
+5. -d POST请求的数据体，默认表头Content-Type : application/x-www-form-urlencoded，且方法默认变为POST，可以省略-X POST
+6. -d "@data.txt"读取参数文件
+7. --data-urlencode POST请求数据体，自动将数据进行URL编码，比如空格
+8. -e Referer
+9. -F 上传二进制文件
+10. -G 拼接URL的get请求curl -G -d 'q=kitties' -d 'count=20' https://google.com/search 对应 https://google.com/search?q=kitties&count=20 ，对于包含空格需要URL编码的数据，可以配合--data--urlencode
+11. -H header
+12. -o 响应保存为文件 相当于wget
+13. -L 跟随服务器重定向
+14. -O 响应保存为文件，URL的最后部分作为文件名
+15. -s不显示错误 -S只显示错误
+16. -s -o /dev/null 不产生任何输出
+17. -u "root:123"用户名密码等同 http://root:123@baidu.com
+18. -v -trace 都可以输出整个调试信息，方便调试
+19. -x请求使用的代理 -X 请求方法

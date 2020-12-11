@@ -1,0 +1,23 @@
+1. mysql.tar.gz  tar -xvf mysql.tar.gz 解压/export/servers/
+2. 如果不存在libjemalloc.so.2
+copy libjemalloc.so.2 到/usr/local/lib/libjemalloc.so.2
+3. 设置profile环境变量 加一行 并source
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/export/servers/mysql/lib
+4. 修改 /export/servers/mysql/etc/my.cnf 配置，看里面用到的mysql路径   /export/Data/innodb/tmp log data 提前建出来
+5. 初始化必须指定my.cnf：/export/servers/mysql/bin/mysqld --defaults-file=/export/servers/mysql/etc/my.cnf --initialize --user=root --datadir=/export/Data/innodb/data --basedir=/export/servers/mysql --explicit_defaults_for_timestamp 
+6. 启动mysql， /export/servers/mysql/bin/mysqld_safe --defaults-file=/export/servers/mysql/etc/my.cnf --user=root &
+7. grep "passw" /export/Data/innodb/log/error.log root 的密码
+
+8. 进去mysql
+
+`/export/servers/mysql/bin/mysql -S /export/Data/innodb/tmp/mysql.socket -port=3358 -uroot -p`
+9. 执行如下命令：
+set password for root@localhost = password('root'); 
+use mysql
+update user set host = '%' where host = 'localhost'; 
+flush privileges;
+create user admin identified by 'admin';
+grant all on *.* to admin;
+flush privileges;
+create database fstestrocksdb;
+use fstestrocksdb

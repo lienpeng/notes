@@ -1,0 +1,46 @@
+【User】【Group】【other】 其所有者(u:user)、所属组(g:group)和其他人(o:other)
+对应权限 read 4 write 2 execute 1
+默认644 User 读写权限 group other 读权限
+
+在shell脚本中获取命令得到的结果
+1. \`command\` (此处不是单引号)
+2. "$(command)"
+3. $(command)
+
+du 目录或者文件大小，只显示当前目录下面的子目录的目录大小和当前目录的总的大小
+-h (human)K、G、M为单位显示
+-s (sum)仅显示总计
+du -h --max-depth=1 仅显示次级目录
+
+vim模式下的搜索
+1. 命令模式下，输入：/字符串
+比如搜索user, 输入/user
+按下回车之后，可以看到vim已经把光标移动到该字符处和高亮了匹配的字符串
+2. 查看下一个匹配，按下n(小写n)
+3. 跳转到上一个匹配，按下N（大写N）
+4. 搜索后，我们打开别的文件，发现也被高亮了，怎么关闭高亮？
+命令模式下，输入:nohlsearch  也可以:set nohlsearch； 当然，可以简写，noh或者set noh。
+
+
+shell脚本开头#!指定shell程序的路径 #!/bin/sh或是#!/bin/bash（是两种shell，但一般不会区分）
+1、作为可执行程序
+一定要写成 ./test.sh，而不是 test.sh，运行其它二进制的程序也一样，直接写 test.sh，linux 系统会去 PATH 里寻找有没有叫 test.sh 的，而只有 /bin, /sbin, /usr/bin，/usr/sbin 等在 PATH 里，你的当前目录通常不在 PATH 里，所以写成 test.sh 是会找不到命令的，要用 ./test.sh 告诉系统说，就在当前目录找。
+2、作为解释器参数
+/bin/sh test.sh 此时sh文件第一行的#！不会生效
+定义变量：变量名和等号之间不能有空格
+使用变量：$name ${name}
+变量可以二次赋值，但是第二次赋值不能加$,只有使用变量时才需要加$
+只读变量readonly
+删除变量 unset
+
+字符串变量
+单引号中的变量都会原样输出
+双引号中可以出现变量和转义字符
+也可以不用引号
+字符串拼接 可以不用+，双引号、单引号都可以greeting="hello, "$your_name" !"
+
+只有一维数组
+
+
+
+

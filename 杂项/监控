@@ -1,0 +1,7 @@
+https://www.bbsmax.com/A/GBJrV9WEJ0/
+grafana , 访问各类数据源 , 自定义报表、显示图表等等 , 用于提供界面监控 , 默认端口为3000 , 默认登陆信息admin
+influxdb , 时序数据库 , 默认端口为Web端8083 , API端8086 , 默认登陆信息admin
+telegraf , 收集系统和服务的统计数据 , 并写入到 InfluxDB数据库 , 在需要监控的机器上安装
+
+cAdvisor
+​Google开源的用于监控基础设施应用的工具，它是一个强大的监控工具，不需要任何配置就可以通过运行在Docker主机上的容器来监控Docker容器，而且可以监控Docker主机。更多详细操作和配置选项可以查看Github上的cAdvisor项目文档。
