@@ -1,0 +1,29 @@
+xlsxwriter比OpenPyXL功能更加强大，但是只能写，不能读已经写入的表格，不支持早期的XLS文件
+workbook = xlsxwriter.Workbook(name + '.xlsx')
+worksheet = workbook.add_worksheet()
+cell_format_head = workbook.add_format({
+    'font_name': "微软雅黑",
+    'font_size': 9,
+    'bold': True,
+    'align': "center",
+    'valign': "vcenter",
+    # 自动换行
+    'text_wrap': True,
+    'border': 1,
+    'border_color': '#000000',
+    'pattern': 1,
+    'fg_color': '#D6FED0'
+})
+
+# 设置列宽，不能覆盖，需要分段设置
+worksheet.set_column('A:O', 15)
+# 合并单元格
+worksheet.merge_range('A1:O1', '一、Forcebot测试结果', cell_format_head)
+# 设置行宽
+set_row(self, row, height=None, cell_format=None, options=None):
+# 行写数据
+write_row(self, row, col, data, cell_format=None)
+# 合并单元格
+merge_range(self, first_row, first_col, last_row, last_col, data, cell_format=None):
+# 当前最大行号
+worksheet.dim_rowmax

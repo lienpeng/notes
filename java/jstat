@@ -1,0 +1,8 @@
+https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html
+https://www.cnblogs.com/sxdcgaq8080/p/11089841.html
+
+
+jstat -gcutil 26044 2s 3
+间隔2S，次数为3
+
+jstat [ generalOption | outputOptions vmid [ interval[s|ms] [ count ] ]

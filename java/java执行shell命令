@@ -1,0 +1,10 @@
+.使用ProcessBuilder
+
+ 
+
+ProcessBuilder pb=new ProcessBuilder(cmd);
+pb.start();
+2.使用Runtime
+
+Runtime.getRuntime().exec(cmd)
+ 但是这个两种方法都有个问题，执行诸如:ps -ef | grep -v grep 带有管道或重定向的命令就会出错。我们都知道使用以上两种方法执行命令时，如果带有参数就要把命令分割成数组或者List传入，不然会被当成一个整体执行（会出错，比如执行"ps -e"）。对于|,<,>号来说，这样做也不行。对于Linux系统，解决方法就是把整个命令都当成sh的参数传入，用sh来执行命令。
