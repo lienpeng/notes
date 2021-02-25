@@ -1,0 +1,44 @@
+链式赋值
+a = b = 3
+
+数据类型
+数字 字符串 元组tuple 列表 集合 字典
+布尔是整数类型的子类
+
+bool(a) 转化为布尔类型
+type(a)获取对象类型
+
+二元运算符
+/ 商 包含小数部分
+** 幂
+// 地板除 小于商的最大整数
+
+列表之间的比较 > 逐一比较元素的大小
+
+逻辑运算符 not and or
+位运算符 ~取反 & | ^异或 >> 右移，符号位补位 <<左移 0补位
+
+序列 list tuple bytes str
+max()返回序列的最后一项
+“python”*2
+
+切片 a[0:4:2] 第三个参数为步长
+a[::-1]反转序列
+
+list 列表 [] 可变序列
+list.append追加 insert(i, x)插入 remove(x)找到多个匹配的元素，只删除第一个
+
+tuple 元组 () 不可变序列 定义的时候小括号可以省略
+拆包 s_id, s_name=(102,'张三')
+
+set 集合 {}无序
+add remove clear
+
+dict 字典 {}
+items() keys() valus()
+遍历
+score = {"haha":12,"hehe":13}
+for s_name, s_id in score.items():
+    print(s_name, s_id)
+
+
