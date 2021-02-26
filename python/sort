@@ -35,6 +35,7 @@ if __name__ == '__main__':
 
 sorted(list,key)
 key = lambda a:b
+a是参数，b是return的值
 key是一个函数，将传入的a转化为b,然后对b进行比较
 lambda是匿名表达式，只是简化代码的编写，对于带循环或者 for in if形式的为了可读性不要使用lambda
 
