@@ -1,3 +1,10 @@
+shell会fork一个子进程去执行。而没有在当前父bash亲自执行。
+source commonShell.sh 在当前bash执行
+文件如果本身有执行权限  路径+文件名就可以执行
+如果文件没有执行权限 通过sh执行
+
+
+
 【User】【Group】【other】 其所有者(u:user)、所属组(g:group)和其他人(o:other)
 对应权限 read 4 write 2 execute 1
 默认644 User 读写权限 group other 读权限
