@@ -1,0 +1,18 @@
+Linux 系统无法创建新文件时，有可能磁盘满了，还有可能是磁盘的inode用光了
+什么是 inode ？
+文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存512字节（相当于0.5KB）。
+操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个”块”（block）。这种由多个扇区组成的”块”，是文件存取的最小单位。”块”的大小，最常见的是4KB，即连续八个 sector组成一个 block。
+文件数据都储存在”块”中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为”索引节点”。
+每一个文件都有对应的inode，里面包含了与该文件有关的一些信息。
+查看系统的 inode 占用情况 df -i
+如何查找那个目录下文件最多
+首先切到根目录  /
+for i in *; do echo $i ; find $i | wc -l; done
+根据最多的目录cd 继续执行
+
+/var/spool/clientmqueue目录占用的较多的inode
+/var/spool/clientmqueue是如果系统中有用户开启了cron，而cron中执行的程序有输出内容，输出内容会以邮件形式发给cron的用户，而sendmail没有启动所以就产生了这些文件。
+/var/spool/clientmqueue目录文件太多，rm -rf *时候会提示：
+“-bash: /bin/rm: Argument list too long“..
+意思是参数太长，rm 干不了。
+可以用ls | xargs rm -f这个命令将/var/spool/clientmqueue目录下所有文件删除。

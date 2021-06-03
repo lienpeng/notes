@@ -1,0 +1,30 @@
+iptables --flush 
+入口丢包
+iptables -I INPUT -s 172.28.228.77,172.28.228.77 -j DROP;
+指定网段
+iptables -I INPUT -s 10.6.0.0/16 -j DROP;
+取反
+iptables -I OUTPUT ! -d 172.28.228.77 -j DROP;(此时并未指定172.28.228.77的报文怎么处理)
+取反操作与同时指定多个IP的操作不能同时使用。
+
+出口丢包
+iptables -I OUTPUT -d 172.28.228.77 -j DROP;
+
+iptables -L --line-numbers #查看规则编号
+iptables -D INPUT 序号   #删除规则
+
+(ping命令使用icmp协议)
+（ssh协议的传输层协议属于tcp协议类型）
+-p 指定协议类型
+centos6中，-p选项支持如下协议类型
+tcp, udp, udplite, icmp, esp, ah, sctp
+centos7中，-p选项支持如下协议类型
+tcp, udp, udplite, icmp, icmpv6,esp, ah, sctp, mh
+
+指定网卡 -i/-o
+-i选项只能用于PREROUTING链、INPUT链、FORWARD链，那么-o选项只能用于FORWARD链、OUTPUT链、POSTROUTING链。
+
+
+
+-I 在所有规则前面添加 （insert）
+-A 在所有规则后面添加 （append）

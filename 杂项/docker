@@ -2,4 +2,50 @@
 容器 ：镜像运行时的实体
 仓库 ：代码控制中心、保存镜像
 
+下载镜像
+docker pull MySQL 下载最新版本
+docker pull MySQL:5.7.32 指定版本
+查看镜像
+docker images
+docker images MySQL
+REPOSITORY为镜像名，TAG为版本标志，IMAGE ID为镜像 id(唯一的)，CREATED为创建时间，SIZE为镜像大小。
+
+docker search MySQL
+删除镜像
+docker image rm MySQL:5.5
+docker image rm (-f 删除运行中的容器) bf756fb1ae65(id)
+docker rmi -f $(docker images MySQL -q)
+
+运行容器
+docker run (-p 80:80端口映射)（-d 后台运行）（--name 容器名称）tomcat:8.0-jre8
+
+查看容器
+docker ps （-a 所有状态容器）（-q 只列出容器ID）
+CONTAINER_ID为容器的 id，IMAGE为镜像名，COMMAND为容器内执行的命令，CREATED为容器的创建时间，STATUS为容器的状态，PORTS为容器内服务监听的端口，NAMES为容器的名称
+docker start/stop/restart/kill id
+docker rm (-f) id
+docker rm -f $(docker ps -qa)
+
+查看日志
+docker logs (-f 实时刷新)(-t 显示时间戳)
+
+交互
+docker exec -it [id] bash   [exit]
+
+文件复制
+docker cp ./test.html 289cc00dc5ed:/usr/local/tomcat/webapps
+
+查看容器内部细节
+docker inspect [id]
+
+Docker 数据卷 （-v）实现宿主机与容器之间的文件共享
+docker run -d -p 8080:8080 --name tomcat01 -v /opt/apps:/usr/local/tomcat/webapps tomcat:8.0-jre8
+默认数据卷
+docker run -d -p 8080:8080 --name tomcat01 -v aa:/usr/local/tomcat/webapps tomcat:8.0-jre8
+aa所在目录/var/lib/docker/volumes
+
+打包镜像
+docker commit -m "描述信息" -a "镜像作者" tomcat01 my_tomcat:1.0
+
+
 

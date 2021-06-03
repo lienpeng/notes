@@ -1,28 +1,37 @@
+渐进式框架（重构的时候可以作为项目的一部分，只重构其中的一部分）
+{{}}mustache是插值语法
+v-for="item in movies" 作用在<li>上就会重复<li>
+v-one 不会随数据的改变而改变
+v-html="param" 当服务端的数据返回的是html格式，我们希望解析这种格式并展示
+
+v-bind是绑定属性 简写 :
+
+export default
+在一个文件或模块中，export、import可以有多个，export default仅有一个。 
+export 可以导出多个命名模块，export defalt只能导出一个默认模块，可以匿名,可以任意名字,导出模块 可以在其他地方import引用 
+
+mixins 混入
+所有混入对象的选项将被“混合”进入该组件本身的选项。
+vuex：用来做状态管理的，里面定义的变量在每个组件中均可以使用和修改，在任一组件中修改此变量的值之后，其他组件中此变量的值也会随之修改。
+Mixins：可以定义共用的变量，在每个组件中使用，引入组件中之后，各个变量是相互独立的，值的修改在组件中不会相互影响。
+混入方法和参数，各个组件不共享
+混入参数、对象（methods,components） 同名的会被组件中的覆盖
+混入函数（created,mounted）合并调用，混合对象里的钩子函数在组件里的钩子函数之前调用
+
+
+
+
+
 node.js是javascript的一种运行环境，是对Google V8引擎进行的封装。是一个服务器端的javascript的解释器。
 node.js和npm是包含关系，nodejs中含有npm
 
-
-在一个文件或模块中，export、import可以有多个，export default仅有一个。 
-export 导出模块 可以在其他地方import引用 
-export可以导出多个命名模块，export defalt只能导出一个默认模块，可以匿名
-
-//demo.js
-export const str = "hello world"
-export function f(a){
-	return a+1;
-}
-引入方式：
-//demo2.js
-import { str ,f }from 'demo.js'
-
-//demo1.js
-export default {
-	a:'hello',
-	b:'world'
-}
-引入方式：
-import obj from ‘demo1.js’
-obj可以任意命名,并且没有花括号
+brew install node
+安装脚手架
+npm install -g @vue/cli
+脚手架创建一个新的项目
+vue create hello-world
+运行
+npm run serve
 
 
 

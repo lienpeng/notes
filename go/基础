@@ -1,0 +1,5 @@
+1、创建依赖文件go.mod
+go mod init example.com/hello
+2、运行文件 package main中的function main()
+3、大写字母开头的方法可以被外部引用
+4、:=声明并初始化
