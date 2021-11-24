@@ -1,0 +1,41 @@
+设置 3.x 为默认版本
+查看 Python 的路径，在 /usr/bin 下面。可以看到 python 链接的是 python 2.7，所以，执行 python 就相当于执行 python 2.7。
+
+# ls -al /usr/bin | grep python
+-rwxr-xr-x.  1 root root      11216 12月  1 2015 abrt-action-analyze-python
+lrwxrwxrwx.  1 root root          7 8月  30 12:11 python -> python2
+lrwxrwxrwx.  1 root root          9 8月  30 12:11 python2 -> python2.7
+-rwxr-xr-x.  1 root root       7136 11月 20 2015 python2.7
+1
+2
+3
+4
+5
+将原来 python 的软链接重命名：
+
+# mv /usr/bin/python /usr/bin/python.bak
+1
+将 python 链接至 python3：
+
+# ln -s /usr/local/bin/python3 /usr/bin/python
+1
+这时，再查看 Python 的版本：
+
+# python -V
+Python 3.5.2
+1
+2
+输出的是 3.x，说明已经使用的是 python3了。
+
+
+
+配置 yum
+升级 Python 之后，由于将默认的 python 指向了 python3，yum 不能正常使用，需要编辑 yum 的配置文件：
+
+# vi /usr/bin/yum
+1
+同时修改：
+
+# vi /usr/libexec/urlgrabber-ext-down
+1
+将 #!/usr/bin/python 改为 #!/usr/bin/python2.7，保存退出即可。

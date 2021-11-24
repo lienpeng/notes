@@ -1,21 +1,35 @@
-iptables --flush 
-入口丢包
-iptables -I INPUT -s 172.28.228.77,172.28.228.77 -j DROP;
-指定网段
+iptables [-t table] -option [match -m] [target -j]
+# target 
+ACCEPT, DROP, QUEUE or RETURN.
+# tables
+filter 默认tables,包括INPUT OUTPUT FORWARD
+
+
+for i in {0..9}
+do
+ sleep 300s
+ iptables -F
+done
+
+# 入口丢包
+iptables -I INPUT -s 11.18.88.194 -j ACCEPT;
+iptables -I OUTPUT -d 11.18.88.194 -j ACCEPT;
+iptables -A INPUT -j DROP;
+iptables -A OUTPUT -j DROP;
+# 指定网段
 iptables -I INPUT -s 10.6.0.0/16 -j DROP;
-取反
+# 取反
 iptables -I OUTPUT ! -d 172.28.228.77 -j DROP;(此时并未指定172.28.228.77的报文怎么处理)
 取反操作与同时指定多个IP的操作不能同时使用。
 
-出口丢包
+# 出口丢包
 iptables -I OUTPUT -d 172.28.228.77 -j DROP;
+# 查看规则编号
+iptables -L 
+# 删除规则
+iptables -D INPUT 序号   
 
-iptables -L --line-numbers #查看规则编号
-iptables -D INPUT 序号   #删除规则
-
-(ping命令使用icmp协议)
-（ssh协议的传输层协议属于tcp协议类型）
--p 指定协议类型
+-p 指定协议类型(ping命令使用icmp协议) （ssh协议的传输层协议属于tcp协议类型）
 centos6中，-p选项支持如下协议类型
 tcp, udp, udplite, icmp, esp, ah, sctp
 centos7中，-p选项支持如下协议类型
@@ -24,7 +38,59 @@ tcp, udp, udplite, icmp, icmpv6,esp, ah, sctp, mh
 指定网卡 -i/-o
 -i选项只能用于PREROUTING链、INPUT链、FORWARD链，那么-o选项只能用于FORWARD链、OUTPUT链、POSTROUTING链。
 
-
-
+规则顺序，iptables会从上往下遍历规则，符合规则后即执行对应的操作
 -I 在所有规则前面添加 （insert）
 -A 在所有规则后面添加 （append）
+
+删除规则 -F
+for((i=1;i<=100;i++));  
+do   
+sleep 600s;
+iptables -F;
+done  
+
+
+iptables -I INPUT -s 172.20.75.32 -m statistic --mode random --probability 0.5 -j DROP
+
+command
+-A, --append chain rule-specification
+       在选定的链后添加一个或者多个规则
+-C, --check chain rule-specification
+       检测一条规则是否匹配此链中指定的规则，或者说检测匹配规则是否存在C
+-D, --delete chain rule-specification
+-D, --delete chain rulenum
+       删除一个或者多个从链中指定的规则，可以使用规则号码或者匹配的规则信息
+-I, --insert chain [rulenum] rule-specification
+       向选定的链中以给定序号向对应位置插入一条或者多条规则。
+-R, --replace chain rulenum rule-specification
+       替换选定链中的一条规则
+-L, --list [chain]
+      列出链中的所有规则，如果没有指定链，则所有的链中的规则都将被显示
+        用法：iptables -t nat -n -L
+        用法：iptables -L -v
+-S, --list-rules [chain]
+       显示所与选中链中的规则，如果未选中具体的链，则所有链的规则将以iptables-save形式打印出来
+-F, --flush [chain]
+       刷新选中的链或者所有的链（如果未指定具体的链）。此操作等于删除了所有的规则
+-Z, --zero [chain [rulenum]]
+       将所有链中的数据包归零,或者清零给定的链，或者指定链中的具体规则
+
+# parameter
+-p, --protocol protocol
+   检测规则或者数据包的传输协议.
+-s, --source address[/mask][,...]
+   指明源，地址可以是网路名称,主机名,网络地址 (with /mask), 或者普通ip
+-d, --destination address[/mask][,...]
+   指明目的
+-i, --in-interface name
+   数据包要通过或者接收的接口名称(只有进入INPUT, FORWARD and PREROUTING
+   链的数据包需要指明)
+-o, --out-interface name
+   指明数据包将要被送往的接口名称
+ -w, --wait [秒]
+          等待xtables锁，阻止一个程序的多实例同时运行，并且一段时间试图去获得执行锁。默认的，如果不能获取执行锁，程序将会退出。此参数将会使进程等待，一直到获得执行锁
+
+指定端口
+iptables -I INPUT -s 11.29.154.111 -p tcp --dport 50088 -j DROP;
+
+
