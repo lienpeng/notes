@@ -1,0 +1,5 @@
+shift command L 选择所有匹配项
+shift option 左键 列选中
+command 键盘<- ->行首 行尾
+command p 命令面板：可以快速定位到搜索的文件；> 可以查看快捷键
+shift option i 多行编辑 也就是变为列选中

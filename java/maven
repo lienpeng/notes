@@ -1,2 +1,11 @@
 运行java
 mvn exec:java -Dexec.mainClass=""
+
+京东的仓库需要增加,id是任意的
+<repository>
+  <snapshots />
+  <id>cache</id>
+  <name>libs-cache</name>
+  <url>http://artifactory.jd.com/centra-repo1-cache</url>
+</repository>
+

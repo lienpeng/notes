@@ -4,3 +4,49 @@
 
 ## 幂等性
 幂等性 ：其任意多次执行所产生的影响均与一次执行的影响相同。
+
+mac java -classpath执行的时候
+报错 MAC zsh:no matches found
+解决：
+1 进入.zshrc 文件 vim ~/.zshrc
+2.在.zshrc中加入 setopt no_nomatch
+3.更新配置 source ~/.zshrc
+
+linux java脚本执行
+nohup java -classpath conf/:lib/* com.jd.jmq.service.ConsumerClientFromLocal &
+
+linux配置环境变量
+vim /etc/profile 增加路径 在PATH变量增加路径 export PATH=bin_path:${PATH}
+
+mac 配置命令行path
+vim ~/.bash_profile
+export PATH=${PATH}:/Applications/MySQLWorkbench.app/Contents/MacOS
+
+mac 安装mysql，默认安装8.0最新版
+brew install mysql
+mac 安装mysql-client
+brew install mysql-client@5.7
+
+mysql 8连接数据库报错，原因未知，修改客户端版本为5.7
+ERROR 2012 (HY000): Cannot use clear text authentication over non-SSL connections.
+
+CPU满载
+for i in `seq 1 $(cat /proc/cpuinfo |grep "physical id" |wc -l)`; do dd if=/dev/zero of=/dev/null & done
+ps -ef |grep 'dd if=/dev/zero|awk' '{print $2}'|xargs kill
+
+
+启动窗口Google\ Chrome --remote-debugging-port=9222 --user-data-dir="~/ChromeProfile"
+连接
+options = webdriver.ChromeOptions()
+options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+driver = webdriver.Chrome(options=options)
+
+在浏览器操作中，通常会需要打开多个浏览器界面，如果不使用switch_to.window，程序会每次还去程序打开的最初始的那个界面寻找元素，这样就导致新界面中的元素找不到。
+1 handles = driver.window_handles          #获取当前浏览器的所有窗口句柄
+2 driver.switch_to.window(handles[-1])     #切换到最新打开的窗口
+3 driver.switch_to.window(handles[-2])     #切换到倒数第二个打开的窗口
+4 driver.switch_to.window(handles[0])      #切换到最开始打开的窗口
+
+关闭当前标签页（从标签页A打开新的标签页B，关闭标签页A）
+
+driver.close()
