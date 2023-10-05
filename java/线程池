@@ -39,3 +39,4 @@ ThreadPoolExecutor executor = new ThreadPoolExecutor(
 
 FixedThreadPool和SingleThreadExecutor：主要问题是堆积的请求处理队列均采用LinkedBlockingQueue，可能会耗费非常大的内存，严重的直接导致内存溢出。
 CachedThreadPool和ScheduledThreadPool：主要问题是它们的最大线程数是Integer.MAX_VALUE，可能会创建数量非常多的线程，严重的直接导致内存溢出。
+ 

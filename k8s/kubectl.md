@@ -1,4 +1,4 @@
-kubectl 配置文件路径$HOME/.kube 下的config文件，其中$HOME为 /root或者 /admin
+kubectl 配置文件路径`$HOME/.kube` 下的`config`文件，其中`$HOME`为 /root或者 /admin1
 
 kubectl get pod/pods/po (name) (-o wide)-n jmq
 kubectl describe pod -n jmq
