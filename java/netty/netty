@@ -1,0 +1,3 @@
+Reactor模型
+Netty中的Reactor模型主要由多路复用器(Acceptor)、事件分发器(Dispatcher)、事件处理器(Handler)组成，可以分为三种。
+

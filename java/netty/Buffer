@@ -1,0 +1,43 @@
+Buffer
+缓冲区 字节数组存储数据
+mark 备份当前的position 初始-1
+position 当前写入或者读取的问题
+limit 写模式等于capacity 读模式下表示可以读取多少数据
+capacity 缓存数组大小
+mark()position值赋给mark reset()mark值赋给position clear()恢复状态值 不会清空数据
+flip() 写模式变为读模式
+rewind()从头开始写数据
+ByteBuffer的实现类包括"HeapByteBuffer"【JVM堆上申请内存】和"DirectByteBuffer"【物理内存中申请内存】两种。
+
+Channel
+NIO把它支持的I/O对象抽象为Channel，Channel又称“通道”，类似于原I/O中的流（Stream），但有所区别： 
+1、流是单向的，通道是双向的，可读可写。 
+2、流读写是阻塞的，通道可以异步读写。 
+3、流中的数据可以选择性的先读到缓存中，通道的数据总是要先读到一个缓存中，或从缓存中写入
+
+RandomAccessFile file = new RandomAccessFile("name.txt","rw");
+        FileChannel channel = file.getChannel();
+        ByteBuffer buffer = ByteBuffer.allocate(1);
+        int byteRead = channel.read(buffer);
+        while (byteRead!=-1){
+            System.out.println("Read:"+byteRead);
+            buffer.flip();
+            while (buffer.hasRemaining()){
+                System.out.println((char) buffer.get());
+            }
+            buffer.clear();
+            byteRead = channel.read(buffer);
+        }
+
+selector
+1、connect：客户端连接服务端事件，对应值为SelectionKey.OPCONNECT(8) 
+
+2、accept：服务端接收客户端连接事件，对应值为SelectionKey.OPACCEPT(16) 
+
+3、read：读事件，对应值为SelectionKey.OPREAD(1) 
+
+4、write：写事件，对应值为SelectionKey.OPWRITE(4)
+
+在JDK1.5 update10和linux core2.6以上版本，sun优化了Selctor的实现，底层使用epoll替换了select/poll。
+epoll是Linux下的一种IO多路复用技术，可以非常高效的处理数以百万计的socket句柄。
+

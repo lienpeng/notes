@@ -1,5 +1,7 @@
 shift command L 选择所有匹配项
 shift option 左键 列选中
-command 键盘<- ->行首 行尾
+command 键盘[左右]行首 行尾 [上下]文章开头结尾
 command p 命令面板：可以快速定位到搜索的文件；> 可以查看快捷键
-shift option i 多行编辑 也就是变为列选中
+shift option i 选中多行后此快捷键开启多行编辑 也就是变为列选中
+ctl g 跳转行号
+cmd T/P  @表示展示当前文件的所有符号[类、方法] 使用#全局搜索 @:会在当前分类

@@ -1,0 +1,3 @@
+this.readShort() & '\uffff'
+将有符号的short类型转换成无符号的int类型
+

@@ -43,10 +43,26 @@ tcp, udp, udplite, icmp, icmpv6,esp, ah, sctp, mh
 -A 在所有规则后面添加 （append）
 
 删除规则 -F
-for((i=1;i<=100;i++));  
-do   
-sleep 600s;
+for((i=1;i<=10000;i++));  
+do
+iptables -I INPUT -s 172.20.75.0/24 -j DROP;
+iptables -I OUTPUT -d 172.20.75.0/24 -j DROP;
+sleep 3s;
 iptables -F;
+sleep 3s;
+done  
+
+iptables -I INPUT -s 11.53.150.203 -j DROP;
+iptables -I OUTPUT -d 11.53.150.203 -j DROP;
+
+
+for(;;);  
+do
+iptables -I INPUT -s 172.20.75.0/24 -j DROP;
+iptables -I OUTPUT -d 172.20.75.0/24 -j DROP;
+sleep 3s;
+iptables -F;
+sleep 3s;
 done  
 
 

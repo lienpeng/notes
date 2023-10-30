@@ -1,0 +1,5 @@
+log4j 配置 开启 DEBUG
+
+<logger name="com.jd.joyqueue.broker.jmq2.security.JMQ2Authentication" level="DEBUG" additivity="true">
+    <appender-ref ref="defaultRollingFile"/>
+</logger>

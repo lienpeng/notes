@@ -1,0 +1,29 @@
+非静态内部类持有外部对象的引用
+内部类虽然和外部类写在同一个文件中， 但是编译完成后， 还是生成各自的class文件，内部类通过this访问外部类的成员。
+1 编译器自动为内部类添加一个成员变量， 这个成员变量的类型和外部类的类型相同， 这个成员变量就是指向外部类对象(this)的引用；
+2 编译器自动为内部类的构造方法添加一个参数， 参数的类型是外部类的类型， 在构造方法内部使用这个参数为内部类中添加的成员变量赋值；
+3在调用内部类的构造函数初始化内部类对象时，会默认传入外部类的引用。
+
+
+
+
+
+导致内存泄露
+public class MemoryLeak {
+    public static void main(String[] args) {
+        MemoryLeak memoryLeak = new MemoryLeak();
+        InnerClass innerClass = memoryLeak.new InnerClass();
+        memoryLeak = null;
+        System.gc();
+    }
+    class InnerClass {
+    }
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        System.out.println("finalize");
+    }
+}
+并不会像预期一样打印finalize，因为内部类持有外部类的引用导致释放不掉.
+如果外部类中又引用了内部对象，会导致循环引用。
+

@@ -17,7 +17,7 @@ source commonShell.sh 在当前bash执行
 du 目录或者文件大小，只显示当前目录下面的子目录的目录大小和当前目录的总的大小
 -h (human)K、G、M为单位显示
 -s (sum)仅显示总计
-du -h --max-depth=1 仅显示次级目录
+du -h --max-depth=1 | sort -hr 仅显示次级目录
 
 vim模式下的搜索
 1. 命令模式下，输入：/字符串

@@ -2,3 +2,16 @@ Xms 最小内存，启动时候就是该大小
 Xmx 最大内存
 Xmn 年轻代内存
 Xss 每个线程的堆栈大小
+
+问题排查
+
+内存高：
+jmap -histo <pid>
+jmap -histo:live <pid>
+dump堆栈信息 使用mat分析
+jmap -dump:live,format=b,file=a1.log <pid> 
+
+CPU高排查
+top -H -p <pid> 查找占用最高的线程
+printf "0x%x\n" <tid> 输出16进制编码
+jstack -l <pid> >jstack.out 打印堆栈 查找16进制编码下的线程
