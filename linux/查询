@@ -5,3 +5,9 @@ ls
 
 du -sh * 文件以及大小（包含文件夹内容的大小）
 ls -lh 列出文件以及文件大小（只有文件和当前文件夹的大小，不包含内容大小）
+
+查看带宽
+ip a
+ethtool eth0
+
+cat result.txt | awk -F "","" '{print $2}' |sort |uniq -c"

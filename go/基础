@@ -1,5 +1,222 @@
 1、创建依赖文件go.mod
-go mod init example.com/hello
-2、运行文件 package main中的function main()
-3、大写字母开头的方法可以被外部引用
+go mod init example.com/hello 【参数代表了代码位置】
+2、运行文件 package main中的func main(){}
+3、大写字母开头的属性、方法可以被外部引用
 4、:=声明并初始化
+
+package main
+import "fmt"
+func main(){
+    fmt.Println("Hello!")
+}
+
+go run .
+go mod tidy 【添加依赖 添加go.sum文件】
+
+返回多个参数
+func Hello(name string) (string, error) {
+}
+
+日志
+import ("log")
+log.SetPrefix("greetings: ") //输出前缀
+log.SetFlags(0) //是否打印时间等字段
+log.Fatal(err)
+
+数组 slice    formats := []string{
+        "Hi, %v. Welcome!",
+        "Great to see you, %v!",
+        "Hail, %v! Well met!",
+    }
+
+
+go程序会首先执行init方法
+// init sets initial values for variables used in the function.
+func init() {
+    rand.Seed(time.Now().UnixNano())
+}
+
+占位符 %v
+message := fmt.Sprintf("Hi,%v",name)
+
+map
+map[string]string
+make(map[string]string)
+messages[name]=message
+
+单元测试
+文件名 **_test.go
+import ("testing")
+func TestHelloName(t *testing.T) {}
+使用t可以来上报或者打印日志
+
+
+编译二进制可执行文件
+go build
+
+install 不用指定路径 在各处都可以执行
+go list -f '{{.Target}}' 找到install path
+export PATH=$PATH:/path/to/your/install/directory
+执行 go install
+
+
+当连续两个或多个函数的已命名形参类型相同时，除最后一个类型以外，其它都可以省略。
+func add(x int, y int) int 简写为 func add(x, y int) int
+
+var 语句用于声明一个变量列表，跟函数的参数列表一样，类型在最后。
+:=可以代替var声明
+
+基本数据类型
+
+bool
+
+string
+
+int  int8  int16  int32  int64
+uint uint8 uint16 uint32 uint64 uintptr
+
+byte // uint8 的别名
+
+rune // int32 的别名
+    // 表示一个 Unicode 码点
+
+float32 float64
+
+complex64 complex128
+
+
+表达式 T(v) 将值 v 转换为类型 T
+常量 const 常量不能使用:=
+循环 for i := 0; i < 10; i++ {
+		sum += i
+	}
+for ; sum < 1000; {
+		sum += sum
+	}
+等同于while :for sum < 1000 {
+		sum += sum
+	}
+判断 if x < 0 {
+if v := math.Pow(x, n); v < lim
+
+switch 默认添加了break
+switch os := runtime.GOOS; os {
+	case "darwin":
+		fmt.Println("OS X.")
+没有表达式等同于switch true
+switch {
+	case t.Hour() < 12:
+
+defer 语句会将函数推迟到外层函数返回之后执行。
+
+推迟调用的函数其参数会立即求值，但直到外层函数返回前该函数都不会被调用。
+推迟的函数调用会被压入一个栈中。当外层函数返回时，被推迟的函数会按照后进先出的顺序调用。
+
+指针：
+类型 *T 是指向 T 类型值的指针。其零值为 nil。
+& 操作符会生成一个指向其操作数的指针 
+i := 42
+p = &i
+* 操作符表示指针指向的底层值。
+
+fmt.Println(*p) // 通过指针 p 读取 i
+*p = 21         // 通过指针 p 设置 i
+
+一个结构体（struct）就是一组字段（field）
+type Vertex struct {
+	X int
+	Y int
+}
+fmt.Println(Vertex{1, 2})
+v := Vertex{1, 2}
+v.X = 4
+结构体指针
+结构体字段可以通过结构体指针来访问。
+如果我们有一个指向结构体的指针 p，那么可以通过 (*p).X 来访问其字段 X。不过这么写太啰嗦了，所以语言也允许我们使用隐式间接引用，直接写 p.X 就可以。
+
+数组
+类型 [n]T 表示拥有 n 个 T 类型的值的数组。数组不能改变大小
+而切片则为数组元素提供动态大小的、灵活的视角
+类型 []T 表示一个元素类型为 T 的切片。
+
+切片通过两个下标来界定，即一个上界和一个下界，二者以冒号分隔：
+
+a[low : high]
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+
+	var s []int = primes[1:4]
+更改切片的元素会修改其底层数组中对应的元素。
+切片下界的默认值为 0，上界则是该切片的长度。
+切片的长度就是它所包含的元素个数。
+
+切片的容量是从它的第一个元素开始数，到其底层数组元素末尾的个数。
+
+切片 s 的长度和容量可通过表达式 len(s) 和 cap(s) 来获取。
+
+切片可以用内建函数 make 来创建，这也是你创建动态数组的方式。
+
+make 函数会分配一个元素为零值的数组并返回一个引用了它的切片：
+
+a := make([]int, 5)  // len(a)=5
+要指定它的容量，需向 make 传入第三个参数：
+
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+
+b = b[:cap(b)] // len(b)=5, cap(b)=5
+b = b[1:]      // len(b)=4, cap(b)=4
+
+for 循环的 range 形式可遍历切片或映射。
+
+当使用 for 循环遍历切片时，每次迭代都会返回两个值。第一个值为当前元素的下标，第二个值为该下标所对应元素的一份副本。
+
+二维切片初始化
+ss := make([][]uint8, dy)
+dy是行数
+
+在映射 m 中插入或修改元素：
+
+m[key] = elem
+获取元素：
+
+elem = m[key]
+删除元素：
+
+delete(m, key)
+通过双赋值检测某个键是否存在：
+
+elem, ok = m[key]
+
+也就是说，由于 Scale 方法有一个指针接收者，为方便起见，Go 会将语句 v.Scale(5) 解释为 (&v).Scale(5)。
+
+
+pprof goLang性能分析
+1、runtime/pprof
+用于可结束的代码块，导入“"runtime/pprof"”
+
+
+
+
+2、net/http/pprof
+用于不可结束的代码块
+
+在main程序中加入 
+import _ "net/http/pprof" 【 _ 意味着只需要该包运行其init()函数即可】
+http.ListenAndServe("localhost:8000", nil)
+
+brew install graphviz 安装完成后可以在pprof的命令行中执行web生成svg的图片查看
+
+http://localhost:8000/debug/pprof/
+
+go tool pprof main http://localhost:8000/debug/pprof/heap
+go tool pprof -svg http://localhost:8000/debug/pprof/profile?seconds=60
+go tool pprof -svg http://localhost:8000/debug/pprof/heap
+
+brew tap hashicorp/tap
+brew install hashicorp/tap/consul
+consul agent -dev
+
+访问地址 http://127.0.0.1:8500/ui/dc1/services
+
+
+
+

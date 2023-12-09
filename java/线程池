@@ -5,16 +5,28 @@ ThreadPoolExecutor executor = new ThreadPoolExecutor(
         TimeUnit.SECONDS,//超时时间单位
         new ArrayBlockingQueue<>(30)//任务队列);
 
+假设每个任务1秒
 10个任务，执行1秒
-20个任务 2秒
+20个任务 2秒 10+10
 40个任务 4秒 10+10+10+10
 41个任务 4秒 11+11+11+8
 45个任务 3秒 15+15+15
 
+说明 任务到达首先判断核心线程池 然后判断等待队列 最后判断最大线程数
+
 原理 任务数大于 核心线程数+队列数 时，工作线程=任务数-核心线程数
 当然 任务数大于 最大线程数+任务队列数 时，多的任务默认会丢弃
 
+当工作队列满且线程个数达到maximunPoolSize后所采取的策略
+AbortPolicy：默认策略；新任务提交时直接抛出未检查的异常RejectedExecutionException，该异常可由调用者捕获。
+CallerRunsPolicy：既不抛弃任务也不抛出异常，使用调用者所在线程运行新的任务。
+DiscardPolicy：丢弃新的任务，且不抛出异常。
+DiscardOldestPolicy：调用poll方法丢弃工作队列队头的任务，然后尝试提交新任务
+自定义策略：根据用户需要定制。
 
+
+
+ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 1、定长线程池（FixedThreadPool）
 
 特点：只有核心线程，线程数量固定，执行完立即回收，任务队列为链表结构的有界队列。
@@ -22,12 +34,12 @@ ThreadPoolExecutor executor = new ThreadPoolExecutor(
 
 2、定时线程池（ScheduledThreadPool ）
 
-特点：核心线程数量固定，非核心线程数量无限，执行完闲置10ms后回收，任务队列为延时阻塞队列。
-应用场景：执行定时或周期性的任务。
+特点：核心线程数量固定，非核心线程数量无限，任务队列为延时阻塞队列【只能存储RunnableScheduledFutures任务】。
+应用场景：执行定时或周期性的任务【因为有scheduleAtFixedRate()方法 比Timer定时器更精确的定时任务】。
 
 3、可缓存线程池（CachedThreadPool）
 
-特点：无核心线程，非核心线程数量无限，执行完闲置60s后回收，任务队列为不存储元素的阻塞队列。
+特点：无核心线程，非核心线程数量无限，执行完闲置60s后回收，任务队列为不存储元素的阻塞队列【一旦有请求到达队列就要找到队列处理】。
 应用场景：执行大量、耗时少的任务。
 
 4、单线程化线程池（SingleThreadExecutor）

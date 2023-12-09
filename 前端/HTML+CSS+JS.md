@@ -1,6 +1,9 @@
-HTML超文本标记语言
-CSS 层叠样式表
-JS JavaScript
+1. 架构分类
+   - C/S架构 
+   - B/S架构【使用浏览器作为软件客户端】
+
+
+HTML超文本标记语言 CSS 层叠样式表 JS JavaScript
 html 
 标签 html head title body p a img h1 
 <a href="" target="_blank"></a> target可以定义链接网址打开的地方
@@ -9,7 +12,7 @@ html
 <hr /> 水平线
 <br />空行
 <!-- This is a comment --> 注释
-<table> <tr> <td> <th>
+<table> zz<tr> <td> <th>
 无序 ul li
 有序 ol li
 自定义 dl dt dd
@@ -31,5 +34,7 @@ p {margin-left: 20px}
 <p style="color: red; margin-left: 20px">
 This is a paragraph
 </p>
+
+
 
 

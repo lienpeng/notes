@@ -55,7 +55,7 @@ tc filter add dev eth0 protocol ip parent 1:0 u32 match ip src 192.168.0.2 flowi
 
 tc qdisc add dev eth0 root handle 1: prio
 
-tc qdisc add dev eth0 root handle 1: netem delay 1ms
+tc qdisc add dev eth0 root handle 1: netem loss 50%
 tc class add dev eth0 parent 1: classid 1:1 htb rate 100Mbps
 tc filter add dev eth0 parent 1: protocol ip prio 1 u32 match ip dst 172.28.159.13 flowid 1:1
 
