@@ -1,7 +1,20 @@
-shift command L 选择所有匹配项
+option+enter 搜索后选中所有
+
+option 点击竖选
 shift option 左键 列选中
-command 键盘[左右]行首 行尾 [上下]文章开头结尾
-command p 命令面板：可以快速定位到搜索的文件；> 可以查看快捷键
+
 shift option i 选中多行后此快捷键开启多行编辑 也就是变为列选中
-ctl g 跳转行号
-cmd T/P  @表示展示当前文件的所有符号[类、方法] 使用#全局搜索 @:会在当前分类
+command 键盘[左右]行首 行尾 [上下]文章开头结尾
+
+command p 命令面板,可以快速定位到搜索的文件；> 可以查看快捷键 :行号
+@表示展示当前文件的所有符号[类、方法] 使用#全局搜索 @:会在当前分类
+
+command b 显示/隐藏边栏
+
+option shift F json格式化
+
+item2快捷键
+清除当前行：ctrl + u
+到行首：ctrl + a
+到行尾：ctrl + e
+删除光标之前的单词：ctrl + w

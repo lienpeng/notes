@@ -1,3 +1,39 @@
 this.readShort() & '\uffff'
-将有符号的short类型转换成无符号的int类型
+将有符号的short类型转换成无符号的int类型 原理 高位置为0
+
+stream flatMap() 接收stream流 扁平化合并
+
+
+Comparable接口 实现该类 表明本身可以排序 可以调用Collections.sort(list)排序
+Comparator接口 实现该类 表明排序的方式 Collections.sort(list, new AscAgeComparator());
+
+o1-o2 默认是升序 因为在sort方法中调用comparato方法，大于会对调位置
+所以o2-o1是降序
+
+Map<String, List<Book>> map = authors.stream()
+        .collect(Collectors.toMap(author -> author.getName(), author -> author.getBooks()));
+
+Optional<Author> authorOptional = Optional.ofNullable(getAuthor());
+
+authorOptional.ifPresent(author -> System.out.println(author.getName()));
+
+
+单侧
+Random mockDemoDao = Mockito.mock(Random.class);
+Mockito.when(mockDemoDao.nextInt()).thenReturn(1);
+
+或者使用注解
+@Mock
+Random mockDemoDao;
+需要在类上注解@RunWith(MockitoJUnitRunner.class) 相当于在自动执行MockitoAnnotations.initMocks 初始化
+
+参数匹配
+when(testList.get(anyInt())).thenReturn("c");
+isNull() notNull()
+
+thenThrow 中可以指定多个异常。在调用时异常依次出现。若调用次数超过异常的数量，再次调用时抛出最后一个异常。
+
+对应返回类型是 void 的函数，thenThrow 是无效的，要使用 doThrow
+
+@InjectMocks: 创建一个实例，简单的说是这个Mock可以调用真实代码的方法，其余用@Mock（或@Spy）注解创建的mock将被注入到用该实例中。
 
