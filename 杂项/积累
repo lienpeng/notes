@@ -48,5 +48,11 @@ driver = webdriver.Chrome(options=options)
 4 driver.switch_to.window(handles[0])      #切换到最开始打开的窗口
 
 关闭当前标签页（从标签页A打开新的标签页B，关闭标签页A）
-
 driver.close()
+
+
+安装jd-gui后打开失败 解决方案
+访达>应用程序>JD-GUI.app>右键>显示包内容>Contents>MacOS>universalJavaApplicationStub.sh
+
+打开后在257行加入一行配置：
+JAVACMD="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin/java" 对应java path
