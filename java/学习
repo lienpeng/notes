@@ -1,0 +1,6 @@
+Arrays.asList 数组转list
+反射执行方法
+Class<User> userClass = User.class;
+User user = userClass.newInstance();
+Method method = userClass.getDeclaredMethod("eat", String.class);
+method.invoke(user, "Jorry");

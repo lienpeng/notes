@@ -2,7 +2,7 @@
 service provider interface
 需要在resources目录下新建META-INF/services目录(建目录的时候一层一层建，不然可能出现META-INF.services的路径，导致拿不到实现类)，并且在这个目录下新建一个与接口S的全限定名(package)一致的文件，在这个文件中写入接口的实现类impl的全限定名
 通过serviceLoader加载实现类并调用
-ServiceLoader<S> uploadCDN = ServiceLoader.load(S.class);
+`ServiceLoader<S> uploadCDN = ServiceLoader.load(S.class)`
 
 Java SPI 就是把某个接口的 指定实现类 （通过在指定文件配置的方式）给实例化出来了。
 
@@ -16,9 +16,9 @@ Class.forName( )静态方法的目的是为了动态加载类
 在JVM加载指定类的过程中，如果类中有静态初始化内容的话，JVM就会执行该部分代码
 JDBC规范要求任何一个driver类必须向DriverManger类去注册自己
 
-了解classload加载机制 双亲委托
+**了解classload加载机制 双亲委托**
 
-实现一个listener
+*实现一个listener*
 
 
 - laf-extension
